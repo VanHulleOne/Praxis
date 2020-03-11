@@ -53,3 +53,7 @@ def findMissing(words, letters=ascii_lowercase):
 missing = list(findMissing(allWords, ascii_lowercase))
 
 print(len(missing))
+
+c = Counter(word[0] for word in missing)
+
+print(c)
