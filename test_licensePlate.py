@@ -10,18 +10,21 @@ test_licensePlate.py
 import licensePlate as lp
 import unittest
 from itertools import product
+import re
 
 class Test(unittest.TestCase):
     
     def testAreIn(self):
-        self.assertTrue(lp.areIn('abc', 'zazbzc')) # spread apart
-        self.assertTrue(lp.areIn('abc', 'zabc')) # at the end
-        self.assertTrue(lp.areIn('abc', 'abcz')) # at the begining
-        self.assertTrue(lp.areIn('abc', 'aabbcc')) # repeated in word
+        regex = re.compile(r'{}\w*{}\w*{}'.format(*'abc'))
+        regex2 = re.compile(r'{}\w*{}\w*{}'.format(*'ood'))
+        self.assertTrue(lp.areIn(regex, 'zazbzc')) # spread apart
+        self.assertTrue(lp.areIn(regex, 'zabc')) # at the end
+        self.assertTrue(lp.areIn(regex, 'abcz')) # at the begining
+        self.assertTrue(lp.areIn(regex, 'aabbcc')) # repeated in word
         
-        self.assertFalse(lp.areIn('abc', 'cab')) # wrong order
-        self.assertFalse(lp.areIn('ood', 'world')) # repeat in letters
-        self.assertFalse(lp.areIn('abc', 'xyz')) # no matching
+        self.assertFalse(lp.areIn(regex, 'cab')) # wrong order
+        self.assertFalse(lp.areIn(regex2, 'world')) # repeat in letters
+        self.assertFalse(lp.areIn(regex, 'xyz')) # no matching
         
     def testFindMissing(self):
         words = ['world', 'abc']
