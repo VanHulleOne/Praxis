@@ -10,9 +10,13 @@ licensePlate.py
 from string import ascii_lowercase
 from itertools import product
 from numba import jit
-drom itertools import Counter
+from collections import Counter
+
+import re
 
 wordFile = 'words_alpha.txt'
+
+f1 = re.compile(r'o\w*l\w*d')
 
 def areIn(letters, word):
     wordIter = iter(word)    
@@ -26,16 +30,8 @@ def areIn(letters, word):
         return False
     return True
 
-    # for letter in letters:
-    #     while True:
-    #         try:
-    #             char = next(wordIter)
-    #         except Exception:
-    #             return False
-    #         if char == letter:
-    #             break
-    # return True
-
+def areIn2(regex, word):
+    return bool(regex.search(word))
 
 with open(wordFile, 'r') as f:
     allWords = [w.rstrip() for w in f]
@@ -51,10 +47,10 @@ def findMissing(words, letters=ascii_lowercase):
         if not found:
             yield plateLetters
             
-missing = list(findMissing(allWords, ascii_lowercase))
+missing = list(findMissing(allWords[:5], ascii_lowercase))
 
 print(len(missing))
 
 c = Counter(word[0] for word in missing)
 
-print(c)
+# print(c)
