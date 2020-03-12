@@ -10,6 +10,7 @@ licensePlate.py
 from string import ascii_lowercase
 from itertools import product
 from numba import jit
+drom itertools import Counter
 
 wordFile = 'words_alpha.txt'
 
